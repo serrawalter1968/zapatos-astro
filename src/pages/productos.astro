@@ -1,0 +1,531 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ProductModal from '../components/ProductModal.astro';
+
+const productos = [
+  {
+    id: 1,
+    nombre: "Corazones",
+    descripcion: "Zapatillas urbanas con detalle de corazón. Elegancia con un toque de ternura.",
+    precio: 85,
+    categoria: "Urbanas",
+    imagen: "/images/zapatos 01.jpg"
+  },
+  {
+    id: 2,
+    nombre: "Urbano Black",
+    descripcion: "Zapatillas urbanas negras. Sofisticación minimalista para el día a día.",
+    precio: 75,
+    categoria: "Urbanas",
+    imagen: "/images/zapatos 02.jpg"
+  },
+  {
+    id: 3,
+    nombre: "Andy",
+    descripcion: "Diseño clásico con toque moderno. El equilibrio perfecto entre tradición y tendencia.",
+    precio: 95,
+    categoria: "Clásicas",
+    imagen: "/images/zapatos 03.jpg"
+  },
+  {
+    id: 4,
+    nombre: "Peques",
+    descripcion: "Zapatillas cómodas para el día a día. Estilo effortless y comodidad asegurada.",
+    precio: 65,
+    categoria: "Casual",
+    imagen: "/images/zapatos 04.jpg"
+  },
+  {
+    id: 5,
+    nombre: "Urbano Cuero",
+    descripcion: "Cuero legítimo de alta calidad. La elección sofisticada para mujer segura.",
+    precio: 110,
+    categoria: "Cuero",
+    imagen: "/images/zapatos 05.jpg"
+  },
+  {
+    id: 6,
+    nombre: "Love",
+    descripcion: "Diseño exclusivo con corazón. Para la mujer que ama la moda con pasión.",
+    precio: 89,
+    categoria: "Especial",
+    imagen: "/images/zapatos 06.jpg"
+  },
+  {
+    id: 7,
+    nombre: "Floter",
+    descripcion: "Estilo relaxed y cómodo. La comodidad nunca lució tan elegante.",
+    precio: 79,
+    categoria: "Relax",
+    imagen: "/images/zapatos 07.jpg"
+  },
+  {
+    id: 8,
+    nombre: "Gliter Plata",
+    descripcion: "Brillo sofisticado para ocasiones especiales. Brilla en cada momento importante.",
+    precio: 95,
+    categoria: "Fiesta",
+    imagen: "/images/zapatos 08.jpg"
+  },
+  {
+    id: 9,
+    nombre: "Bella Plata",
+    descripcion: "Elegancia en plateado. El color que eleva cualquier outfit.",
+    precio: 89,
+    categoria: "Elegantes",
+    imagen: "/images/zapatos 09.jpg"
+  },
+  {
+    id: 10,
+    nombre: "Star Plata",
+    descripcion: "Diseño estrellas con brillo. Para mujeres que nacieron para brillar.",
+    precio: 92,
+    categoria: "Fiesta",
+    imagen: "/images/zapatos 10.jpg"
+  },
+  {
+    id: 11,
+    nombre: "Reptil",
+    descripcion: "Textura de reptil exclusiva. Un statement de poder y distinción.",
+    precio: 105,
+    categoria: "Premium",
+    imagen: "/images/zapatos 11.jpg"
+  },
+  {
+    id: 12,
+    nombre: "Bella",
+    descripcion: "Clásico elegante en negro. El básico que toda mujer necesita.",
+    precio: 85,
+    categoria: "Elegantes",
+    imagen: "/images/zapatos 12.jpg"
+  },
+  {
+    id: 13,
+    nombre: "Star",
+    descripcion: "Diseño starring con brillo. Eleva tu look con actitud de estrella.",
+    precio: 89,
+    categoria: "Fiesta",
+    imagen: "/images/zapatos 13.jpg"
+  }
+];
+---
+
+<Layout title="Colección">
+  <Header />
+
+  <main>
+    <section class="page-header">
+      <div class="header-decoration"></div>
+      <span class="page-label">Catálogo Exclusivo</span>
+      <h1>Nuestra Colección</h1>
+      <p class="page-description">Piezas únicas diseñadas para la mujer que sabe lo que quiere. Calidad italiana, diseño exclusivo.</p>
+    </section>
+
+    <section class="productos">
+      <div class="productos-grid">
+        {productos.map(producto => (
+          <article class="producto-card" data-id={producto.id} data-nombre={producto.nombre} data-precio={producto.precio} data-imagen={producto.imagen}>
+            <div class="producto-imagen">
+              <img src={producto.imagen} alt={producto.nombre} />
+              <div class="producto-overlay">
+                <button class="view-details-btn" data-id={producto.id} data-nombre={producto.nombre} data-precio={producto.precio} data-imagen={producto.imagen} data-descripcion={producto.descripcion} data-categoria={producto.categoria}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  Ver Detalles
+                </button>
+                <button class="add-to-cart-btn" data-id={producto.id} data-nombre={producto.nombre} data-precio={producto.precio} data-imagen={producto.imagen}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                  Agregar al Carrito
+                </button>
+              </div>
+            </div>
+            <div class="producto-info">
+              <span class="producto-categoria">{producto.categoria}</span>
+              <h3>{producto.nombre}</h3>
+              <p>{producto.descripcion}</p>
+              <div class="producto-footer">
+                <span class="producto-precio">€{producto.precio}</span>
+                <div class="action-buttons">
+                  <button class="view-btn" data-id={producto.id} data-nombre={producto.nombre} data-precio={producto.precio} data-imagen={producto.imagen} data-descripcion={producto.descripcion} data-categoria={producto.categoria}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  </button>
+                  <button class="add-btn" data-id={producto.id} data-nombre={producto.nombre} data-precio={producto.precio} data-imagen={producto.imagen}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="call-to-action">
+      <div class="cta-text">
+        <h2>¿No encuentras lo que buscas?</h2>
+        <p>Contáctanos para pedidos especiales y personalizados.</p>
+      </div>
+      <a href="/contacto" class="btn-contact">Contáctanos</a>
+    </section>
+  </main>
+
+  <Footer />
+  <ProductModal />
+</Layout>
+
+<style>
+  main {
+    flex: 1;
+  }
+
+  .page-header {
+    text-align: center;
+    padding: 5rem 3rem 4rem;
+    background: linear-gradient(180deg, var(--color-blanco-puro) 0%, var(--color-crema) 100%);
+    position: relative;
+  }
+
+  .header-decoration {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
+    background: var(--color-dorado);
+  }
+
+  .page-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--color-dorado);
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .page-header h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-negro);
+  }
+
+  .page-description {
+    color: var(--color-gris-medio);
+    max-width: 500px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+
+  .productos {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 3rem 5rem;
+  }
+
+  .productos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+
+  .producto-card {
+    background: var(--color-blanco-puro);
+    transition: all 0.4s ease;
+  }
+
+  .producto-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--sombra-media);
+  }
+
+  .producto-imagen {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+  }
+
+  .producto-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .producto-card:hover .producto-imagen img {
+    transform: scale(1.08);
+  }
+
+  .producto-info {
+    padding: 1.8rem;
+  }
+
+  .producto-categoria {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-dorado);
+  }
+
+  .producto-info h3 {
+    font-size: 1.3rem;
+    margin: 0.6rem 0;
+    color: var(--color-negro);
+  }
+
+  .producto-info p {
+    font-size: 0.9rem;
+    color: var(--color-gris-medio);
+    margin-bottom: 1.2rem;
+    line-height: 1.6;
+  }
+
+  .producto-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .producto-precio {
+    font-family: var(--font-titulo);
+    font-size: 1.2rem;
+    color: var(--color-negro);
+  }
+
+  .add-btn {
+    background: var(--color-negro);
+    border: none;
+    color: var(--color-blanco-puro);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .add-btn:hover {
+    background: var(--color-dorado);
+    color: var(--color-negro);
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .view-btn {
+    background: var(--color-crema);
+    border: 1px solid var(--color-crema-oscuro);
+    color: var(--color-gris-oscuro);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .view-btn:hover {
+    background: var(--color-dorado);
+    border-color: var(--color-dorado);
+    color: var(--color-negro);
+  }
+
+  .producto-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    background: var(--color-crema);
+    color: var(--color-dorado);
+  }
+
+  .producto-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(26, 26, 26, 0.85) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 1.5rem;
+    gap: 0.8rem;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .producto-card:hover .producto-overlay {
+    opacity: 1;
+  }
+
+  .view-details-btn, .add-to-cart-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.2rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  .view-details-btn {
+    background: var(--color-blanco-puro);
+    color: var(--color-negro);
+  }
+
+  .add-to-cart-btn {
+    background: var(--color-dorado);
+    color: var(--color-negro);
+  }
+
+  .producto-card:hover .view-details-btn,
+  .producto-card:hover .add-to-cart-btn {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .view-details-btn:hover {
+    background: var(--color-crema);
+  }
+
+  .add-to-cart-btn:hover {
+    background: var(--color-blanco-puro);
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--color-negro);
+    color: var(--color-blanco-puro);
+    padding: 1rem 2rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    z-index: 1001;
+    opacity: 0;
+    transition: all 0.4s ease;
+  }
+
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  .toast.success {
+    background: var(--color-dorado);
+    color: var(--color-negro);
+  }
+
+  .call-to-action {
+    background: var(--color-negro);
+    padding: 4rem 3rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .cta-text h2 {
+    font-size: 1.8rem;
+    color: var(--color-blanco-puro);
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-text p {
+    color: var(--color-gris-claro);
+  }
+
+  .btn-contact {
+    padding: 1rem 3rem;
+    background: transparent;
+    color: var(--color-dorado);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: 1px solid var(--color-dorado);
+    transition: all 0.3s ease;
+  }
+
+  .btn-contact:hover {
+    background: var(--color-dorado);
+    color: var(--color-negro);
+  }
+
+  @media (max-width: 1024px) {
+    .productos-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .productos-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .page-header h1 {
+      font-size: 2.5rem;
+    }
+
+    .productos {
+      padding: 2rem 1.5rem 4rem;
+    }
+  }
+</style>
+
+<script>
+  import { addToCart, getCartItems } from '../stores/cart-store.js';
+
+  function showToast(message, isSuccess = true) {
+    let toast = document.querySelector('.toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.className = 'toast';
+      document.body.appendChild(toast);
+    }
+
+    toast.textContent = message;
+    toast.className = 'toast' + (isSuccess ? ' success' : '');
+    toast.classList.add('show');
+
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 2500);
+  }
+
+  function updateCartCount() {
+    const cartCountEl = document.getElementById('cartCount');
+    if (cartCountEl) {
+      const count = getCartItems().reduce((sum, item) => sum + item.cantidad, 0);
+      cartCountEl.textContent = count;
+      cartCountEl.style.display = count > 0 ? 'flex' : 'none';
+    }
+  }
+
+  document.querySelectorAll('.add-to-cart-btn, .add-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const product = {
+        id: btn.dataset.id,
+        nombre: btn.dataset.nombre,
+        precio: parseInt(btn.dataset.precio),
+        imagen: btn.dataset.imagen
+      };
+
+      addToCart(product);
+      updateCartCount();
+      showToast(`${product.nombre} agregado al carrito`);
+    });
+  });
+</script>

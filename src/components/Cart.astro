@@ -1,0 +1,363 @@
+---
+---
+
+<div class="cart-overlay" id="cartOverlay">
+  <div class="cart-panel">
+    <div class="cart-header">
+      <h3>Tu Carrito</h3>
+      <button class="close-cart" id="closeCart">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <div class="cart-items" id="cartItems">
+      <div class="empty-cart">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        <p>Tu carrito está vacío</p>
+        <span>Explora nuestra colección y agrega tus favoritos</span>
+      </div>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total</span>
+        <span class="total-amount" id="cartTotal">€0</span>
+      </div>
+      <div class="cart-actions">
+        <button class="btn-clear" id="clearCart">Vaciar Carrito</button>
+        <button class="btn-checkout">Proceder al Pago</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { cartStore, getCartItems, getCartTotal, removeFromCart, clearCart } from '../stores/cart-store.js';
+
+  const cartOverlay = document.getElementById('cartOverlay');
+  const closeCartBtn = document.getElementById('closeCart');
+  const cartItemsContainer = document.getElementById('cartItems');
+  const cartTotalEl = document.getElementById('cartTotal');
+  const clearCartBtn = document.getElementById('clearCart');
+  const openCartBtns = document.querySelectorAll('.open-cart');
+
+  function renderCart() {
+    const items = getCartItems();
+    const total = getCartTotal();
+
+    if (items.length === 0) {
+      cartItemsContainer.innerHTML = `
+        <div class="empty-cart">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <p>Tu carrito está vacío</p>
+          <span>Explora nuestra colección y agrega tus favoritos</span>
+        </div>
+      `;
+    } else {
+      cartItemsContainer.innerHTML = items.map(item => `
+        <div class="cart-item" data-key="${item.key}">
+          <div class="item-image">
+            <img src="${item.imagen}" alt="${item.nombre}" />
+          </div>
+          <div class="item-details">
+            <h4>${item.nombre}</h4>
+            <span class="item-price">€${item.precio}</span>
+            <div class="item-quantity">
+              <span>Cantidad: ${item.cantidad}</span>
+            </div>
+          </div>
+          <button class="remove-item" data-key="${item.key}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    cartTotalEl.textContent = `€${total}`;
+  }
+
+  function openCart() {
+    cartOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    renderCart();
+  }
+
+  function closeCart() {
+    cartOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  openCartBtns.forEach(btn => {
+    btn.addEventListener('click', openCart);
+  });
+
+  closeCartBtn.addEventListener('click', closeCart);
+
+  cartOverlay.addEventListener('click', (e) => {
+    if (e.target === cartOverlay) {
+      closeCart();
+    }
+  });
+
+  cartItemsContainer.addEventListener('click', (e) => {
+    const removeBtn = e.target.closest('.remove-item');
+    if (removeBtn) {
+      const key = removeBtn.dataset.key;
+      removeFromCart(key);
+      renderCart();
+      updateCartCount();
+    }
+  });
+
+  clearCartBtn.addEventListener('click', () => {
+    if (confirm('¿Estás segura de que quieres vaciar el carrito?')) {
+      clearCart();
+      renderCart();
+      updateCartCount();
+    }
+  });
+
+  function updateCartCount() {
+    const cartCountEl = document.getElementById('cartCount');
+    if (cartCountEl) {
+      const count = getCartItems().reduce((sum, item) => sum + item.cantidad, 0);
+      cartCountEl.textContent = count;
+      cartCountEl.style.display = count > 0 ? 'flex' : 'none';
+    }
+  }
+
+  cartStore.subscribe(() => {
+    renderCart();
+    updateCartCount();
+  });
+
+  renderCart();
+  updateCartCount();
+</script>
+
+<style>
+  .cart-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 26, 26, 0.6);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .cart-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .cart-panel {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    max-width: 450px;
+    background: var(--color-blanco-puro);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.4s ease;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .cart-overlay.active .cart-panel {
+    transform: translateX(0);
+  }
+
+  .cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--color-crema-oscuro);
+  }
+
+  .cart-header h3 {
+    font-family: var(--font-titulo);
+    font-size: 1.5rem;
+    letter-spacing: 0.1em;
+    color: var(--color-negro);
+  }
+
+  .close-cart {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-gris-medio);
+    transition: color 0.3s ease;
+    padding: 0.5rem;
+  }
+
+  .close-cart:hover {
+    color: var(--color-negro);
+  }
+
+  .cart-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem 2rem;
+  }
+
+  .empty-cart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--color-gris-claro);
+  }
+
+  .empty-cart svg {
+    margin-bottom: 1.5rem;
+    opacity: 0.5;
+  }
+
+  .empty-cart p {
+    font-size: 1.1rem;
+    color: var(--color-gris-oscuro);
+    margin-bottom: 0.5rem;
+  }
+
+  .empty-cart span {
+    font-size: 0.9rem;
+    color: var(--color-gris-medio);
+  }
+
+  .cart-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--color-crema);
+    position: relative;
+  }
+
+  .item-image {
+    width: 90px;
+    height: 110px;
+    flex-shrink: 0;
+  }
+
+  .item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .item-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .item-details h4 {
+    font-family: var(--font-titulo);
+    font-size: 1rem;
+    color: var(--color-negro);
+    margin-bottom: 0.5rem;
+  }
+
+  .item-price {
+    font-size: 1rem;
+    color: var(--color-dorado);
+    font-weight: 500;
+  }
+
+  .item-quantity {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-gris-medio);
+  }
+
+  .remove-item {
+    position: absolute;
+    top: 1.2rem;
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-gris-claro);
+    transition: color 0.3s ease;
+    padding: 0.5rem;
+  }
+
+  .remove-item:hover {
+    color: #c0392b;
+  }
+
+  .cart-footer {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid var(--color-crema-oscuro);
+    background: var(--color-crema);
+  }
+
+  .cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .cart-total span {
+    font-size: 1rem;
+    color: var(--color-gris-oscuro);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .total-amount {
+    font-family: var(--font-titulo);
+    font-size: 1.5rem;
+    color: var(--color-negro) !important;
+    font-weight: 600;
+  }
+
+  .cart-actions {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .btn-clear {
+    flex: 1;
+    padding: 1rem;
+    background: transparent;
+    border: 1px solid var(--color-gris-medio);
+    color: var(--color-gris-oscuro);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-clear:hover {
+    border-color: #c0392b;
+    color: #c0392b;
+  }
+
+  .btn-checkout {
+    flex: 2;
+    padding: 1rem;
+    background: var(--color-negro);
+    border: 1px solid var(--color-negro);
+    color: var(--color-blanco-puro);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-checkout:hover {
+    background: var(--color-dorado);
+    border-color: var(--color-dorado);
+    color: var(--color-negro);
+  }
+</style>

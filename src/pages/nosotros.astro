@@ -1,0 +1,345 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Nosotros">
+  <Header />
+
+  <main>
+    <section class="page-header">
+      <span class="page-label">Nuestra Historia</span>
+      <h1>La Marca</h1>
+      <p class="page-intro">Creando elegancia desde el corazón de Europa</p>
+    </section>
+
+    <section class="hero-story">
+      <div class="story-image">
+        <img src="/images/zapatos 10.jpg" alt="Zapatos elegantes de mujer" />
+        <div class="image-accent"></div>
+      </div>
+      <div class="story-content">
+        <h2>Diseño Exclusivo para la Mujer Moderna</h2>
+        <p>En Élégance, creemos que cada mujer merece calzar algo más que un simple zapato. Creamos calzado que celebra la feminidad, la confianza y el estilo personal.</p>
+        <p>Nuestra colección combina las últimas tendencias de la moda italiana con diseños atemporales, pensados para acompañarte desde una reunión de trabajo hasta una cena especial. Cada par es una expresión de sofisticación.</p>
+        <p>Seleccionamos personalmente cada material, colaboramos con los mejores talleres artesanales y prestamos atención a cada detalle: desde la sensación del cuero hasta el acabado final. El resultado es un calzado que no solo luce increíble, sino que se siente increíble.</p>
+      </div>
+    </section>
+
+    <section class="values">
+      <div class="values-header">
+        <span class="section-label">Nuestros Pilares</span>
+        <h2>Lo Que Nos Define</h2>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <span class="value-number">13</span>
+          <h3>Modelos Exclusivos</h3>
+          <p>Diseños únicos que no encontrarás en ningún otro lugar</p>
+        </div>
+        <div class="value-card">
+          <span class="value-number">100%</span>
+          <h3>Cuero Italiano</h3>
+          <p>Materiales premium seleccionados personalmente</p>
+        </div>
+        <div class="value-card">
+          <span class="value-number">◆</span>
+          <h3>Diseño Atemporal</h3>
+          <p>Estilos que trascienden las temporadas</p>
+        </div>
+        <div class="value-card">
+          <span class="value-number">♥</span>
+          <h3>Comodidad Total</h3>
+          <p>Calzado diseñado para usarse todo el día</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="process">
+      <div class="process-content">
+        <span class="section-label">El Proceso</span>
+        <h2>Artesanía en Cada Paso</h2>
+        <div class="process-steps">
+          <div class="step">
+            <div class="step-number">01</div>
+            <h4>Selección de Materiales</h4>
+            <p>Escogemos solo los mejores cueros de Italia</p>
+          </div>
+          <div class="step">
+            <div class="step-number">02</div>
+            <h4>Diseño Exclusivo</h4>
+            <p>Cada modelo es creado por nuestros diseñadores</p>
+          </div>
+          <div class="step">
+            <div class="step-number">03</div>
+            <h4>Elaboración Artesanal</h4>
+            <p>Manos expertas dan vida a cada par</p>
+          </div>
+          <div class="step">
+            <div class="step-number">04</div>
+            <h4>Control de Calidad</h4>
+            <p>Inspeccionamos cada detalle antes de enviar</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="cta-content">
+        <h2>Descubre tu estilo perfecto</h2>
+        <p>Explora nuestra colección y encuentra los zapatos que hablan de ti.</p>
+        <a href="/productos" class="btn-cta">Ver Colección</a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  main {
+    flex: 1;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--color-dorado);
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .page-header {
+    text-align: center;
+    padding: 5rem 3rem 3rem;
+    background: linear-gradient(180deg, var(--color-blanco-puro) 0%, var(--color-crema) 100%);
+  }
+
+  .page-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--color-dorado);
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .page-header h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .page-intro {
+    font-size: 1.2rem;
+    color: var(--color-gris-medio);
+    font-style: italic;
+    font-family: var(--font-titulo);
+  }
+
+  .hero-story {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 5rem 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .story-image {
+    position: relative;
+  }
+
+  .story-image img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+  }
+
+  .image-accent {
+    position: absolute;
+    top: -1.5rem;
+    right: -1.5rem;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    border: 1px solid var(--color-dorado);
+    z-index: -1;
+  }
+
+  .story-content h2 {
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+    color: var(--color-negro);
+  }
+
+  .story-content p {
+    font-size: 1rem;
+    color: var(--color-gris-medio);
+    line-height: 1.9;
+    margin-bottom: 1.5rem;
+  }
+
+  .values {
+    padding: 5rem 3rem;
+    background: var(--color-blanco-puro);
+  }
+
+  .values-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .values-header h2 {
+    font-size: 2.2rem;
+    color: var(--color-negro);
+  }
+
+  .values-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .value-card {
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    border: 1px solid var(--color-crema-oscuro);
+    transition: all 0.3s ease;
+  }
+
+  .value-card:hover {
+    border-color: var(--color-dorado);
+    transform: translateY(-5px);
+  }
+
+  .value-number {
+    font-family: var(--font-titulo);
+    font-size: 2.5rem;
+    color: var(--color-dorado);
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .value-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+    color: var(--color-negro);
+  }
+
+  .value-card p {
+    font-size: 0.85rem;
+    color: var(--color-gris-medio);
+  }
+
+  .process {
+    padding: 5rem 3rem;
+    background: var(--color-crema);
+  }
+
+  .process-content {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .process-content h2 {
+    font-size: 2.2rem;
+    margin-bottom: 3rem;
+    color: var(--color-negro);
+    text-align: center;
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .step {
+    text-align: center;
+    padding: 1.5rem;
+  }
+
+  .step-number {
+    font-family: var(--font-titulo);
+    font-size: 2rem;
+    color: var(--color-dorado);
+    margin-bottom: 1rem;
+  }
+
+  .step h4 {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+    color: var(--color-negro);
+  }
+
+  .step p {
+    font-size: 0.85rem;
+    color: var(--color-gris-medio);
+    line-height: 1.6;
+  }
+
+  .cta-section {
+    padding: 5rem 3rem;
+    background: var(--color-negro);
+    text-align: center;
+  }
+
+  .cta-content h2 {
+    font-size: 2.2rem;
+    color: var(--color-blanco-puro);
+    margin-bottom: 1rem;
+  }
+
+  .cta-content p {
+    color: var(--color-gris-claro);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+  }
+
+  .btn-cta {
+    display: inline-block;
+    padding: 1rem 3rem;
+    background: var(--color-dorado);
+    color: var(--color-negro);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+  }
+
+  .btn-cta:hover {
+    background: transparent;
+    color: var(--color-blanco-puro);
+  }
+
+  @media (max-width: 900px) {
+    .hero-story {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .values-grid,
+    .process-steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .values-grid,
+    .process-steps {
+      grid-template-columns: 1fr;
+    }
+
+    .page-header h1 {
+      font-size: 2.5rem;
+    }
+
+    .story-content h2 {
+      font-size: 1.8rem;
+    }
+  }
+</style>

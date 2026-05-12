@@ -1,0 +1,313 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Contacto">
+  <Header />
+
+  <main>
+    <section class="page-header">
+      <span class="page-label">Contáctanos</span>
+      <h1>Estamos Para Ti</h1>
+      <p class="page-intro">Escríbenos y descubre tu próximo par perfecto</p>
+    </section>
+
+    <section class="contacto-layout">
+      <div class="contacto-imagen">
+        <img src="/images/zapatos 15.jpg" alt="Zapatillas exclusivas Élégance" />
+        <div class="imagen-overlay">
+          <div class="overlay-content">
+            <h3>Élégance</h3>
+            <p>Maison de Chaussures</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="contacto-info">
+        <div class="info-section">
+          <h3>Escríbenos</h3>
+          <p class="info-description">¿Tienes alguna pregunta sobre nuestros modelos? ¿Necesitas asesoramiento? Estamos aquí para ayudarte.</p>
+        </div>
+
+        <div class="info-items">
+          <div class="info-item">
+            <span class="info-label">Email</span>
+            <span class="info-value">contacto@elegance-shoes.com</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Teléfono</span>
+            <span class="info-value">+34 612 345 678</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Horario</span>
+            <span class="info-value">Lun - Vie: 10:00 - 19:00</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Dirección</span>
+            <span class="info-value">Calle Serrano, 45<br/>Madrid, España</span>
+          </div>
+        </div>
+      </div>
+
+      <form class="contacto-form" method="POST">
+        <div class="form-header">
+          <h3>Envíanos un Mensaje</h3>
+          <p>Te responderemos en menos de 24 horas</p>
+        </div>
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="tu@email.com" />
+        </div>
+        <div class="form-group">
+          <label for="telefono">Teléfono (opcional)</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="+34 ..." />
+        </div>
+        <div class="form-group">
+          <label for="mensaje">Mensaje</label>
+          <textarea id="mensaje" name="mensaje" rows="5" required placeholder="Cuéntanos lo que necesitas..."></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Enviar Mensaje</button>
+      </form>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  main {
+    flex: 1;
+  }
+
+  .page-header {
+    text-align: center;
+    padding: 5rem 3rem 3rem;
+    background: linear-gradient(180deg, var(--color-blanco-puro) 0%, var(--color-crema) 100%);
+  }
+
+  .page-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--color-dorado);
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .page-header h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .page-intro {
+    font-size: 1.2rem;
+    color: var(--color-gris-medio);
+    font-style: italic;
+    font-family: var(--font-titulo);
+  }
+
+  .contacto-layout {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 4rem 3rem 5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.2fr;
+    gap: 3rem;
+  }
+
+  .contacto-imagen {
+    position: relative;
+  }
+
+  .contacto-imagen img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+  }
+
+  .imagen-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(26, 26, 26, 0.8) 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: 2rem;
+  }
+
+  .overlay-content {
+    color: var(--color-blanco-puro);
+  }
+
+  .overlay-content h3 {
+    font-size: 1.5rem;
+    letter-spacing: 0.15em;
+    color: var(--color-dorado);
+  }
+
+  .overlay-content p {
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-blanco);
+  }
+
+  .contacto-info {
+    padding: 2rem 0;
+  }
+
+  .info-section {
+    margin-bottom: 3rem;
+  }
+
+  .info-section h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: var(--color-negro);
+  }
+
+  .info-description {
+    font-size: 1rem;
+    color: var(--color-gris-medio);
+    line-height: 1.7;
+  }
+
+  .info-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .info-item {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-crema-oscuro);
+  }
+
+  .info-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-dorado);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .info-value {
+    font-size: 1rem;
+    color: var(--color-negro);
+  }
+
+  .contacto-form {
+    background: var(--color-blanco-puro);
+    padding: 2.5rem;
+    border: 1px solid var(--color-crema-oscuro);
+  }
+
+  .form-header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .form-header h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-negro);
+  }
+
+  .form-header p {
+    font-size: 0.9rem;
+    color: var(--color-gris-medio);
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-gris-oscuro);
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--color-crema-oscuro);
+    background: var(--color-crema);
+    font-family: var(--font-cuerpo);
+    font-size: 0.95rem;
+    color: var(--color-negro);
+    transition: all 0.3s ease;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: var(--color-gris-claro);
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-dorado);
+    background: var(--color-blanco-puro);
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 1.2rem;
+    background: var(--color-negro);
+    color: var(--color-blanco-puro);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: 1px solid var(--color-negro);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-submit:hover {
+    background: var(--color-dorado);
+    border-color: var(--color-dorado);
+    color: var(--color-negro);
+  }
+
+  @media (max-width: 1024px) {
+    .contacto-layout {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .contacto-imagen {
+      grid-column: 1 / -1;
+      order: -1;
+    }
+
+    .contacto-imagen img {
+      max-height: 300px;
+      aspect-ratio: 16/9;
+    }
+
+    .imagen-overlay {
+      display: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .contacto-layout {
+      grid-template-columns: 1fr;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    .page-header h1 {
+      font-size: 2.5rem;
+    }
+  }
+</style>

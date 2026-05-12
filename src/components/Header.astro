@@ -1,0 +1,194 @@
+---
+import Cart from './Cart.astro';
+
+const navLinks = [
+  { href: '/', label: 'Inicio' },
+  { href: '/productos', label: 'Colección' },
+  { href: '/nosotros', label: 'Nosotros' },
+  { href: '/contacto', label: 'Contacto' },
+];
+---
+
+<header class="header">
+  <div class="header-decorative"></div>
+  <nav class="nav">
+    <a href="/" class="logo">
+      <span class="logo-text">Élégance</span>
+      <span class="logo-tagline">Maison de Chaussures</span>
+    </a>
+    <ul class="nav-links">
+      {navLinks.map(link => (
+        <li><a href={link.href}>{link.label}</a></li>
+      ))}
+    </ul>
+    <button class="cart-btn open-cart">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+    <div class="nav-accent"></div>
+  </nav>
+</header>
+
+<Cart />
+
+<script>
+  import { getCartItems } from '../stores/cart-store.js';
+
+  function updateCartCount() {
+    const cartCountEl = document.getElementById('cartCount');
+    if (cartCountEl) {
+      const count = getCartItems().reduce((sum, item) => sum + item.cantidad, 0);
+      cartCountEl.textContent = count;
+      cartCountEl.style.display = count > 0 ? 'flex' : 'none';
+    }
+  }
+
+  updateCartCount();
+
+  const interval = setInterval(() => {
+    const cartCountEl = document.getElementById('cartCount');
+    if (cartCountEl && cartCountEl.textContent !== '0') {
+      clearInterval(interval);
+    }
+    updateCartCount();
+  }, 500);
+</script>
+
+<style>
+  .header {
+    position: relative;
+    padding: 1.2rem 3rem;
+    background: linear-gradient(180deg, var(--color-blanco-puro) 0%, var(--color-crema) 100%);
+    border-bottom: 1px solid rgba(184, 150, 107, 0.15);
+  }
+
+  .header-decorative {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--color-dorado) 20%, var(--color-dorado) 80%, transparent 100%);
+  }
+
+  .nav {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .logo-text {
+    font-family: var(--font-titulo);
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--color-negro);
+    letter-spacing: 0.2em;
+    line-height: 1;
+  }
+
+  .logo-tagline {
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--color-dorado);
+    font-weight: 400;
+    margin-top: 0.2rem;
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 3rem;
+  }
+
+  .nav-links a {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gris-oscuro);
+    position: relative;
+    padding: 0.5rem 0;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 1px;
+    background: var(--color-dorado);
+    transition: width 0.4s ease;
+  }
+
+  .nav-links a:hover {
+    color: var(--color-negro);
+  }
+
+  .nav-links a:hover::after {
+    width: 100%;
+  }
+
+  .cart-btn {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-gris-oscuro);
+    transition: color 0.3s ease;
+    padding: 0.5rem;
+  }
+
+  .cart-btn:hover {
+    color: var(--color-negro);
+  }
+
+  .cart-count {
+    position: absolute;
+    top: -2px;
+    right: -6px;
+    background: var(--color-dorado);
+    color: var(--color-negro);
+    font-size: 0.65rem;
+    font-weight: 600;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-accent {
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: var(--color-dorado);
+  }
+
+  @media (max-width: 768px) {
+    .header {
+      padding: 1rem 1.5rem;
+    }
+
+    .nav-links {
+      gap: 1.5rem;
+    }
+
+    .logo-text {
+      font-size: 1.6rem;
+    }
+  }
+</style>
