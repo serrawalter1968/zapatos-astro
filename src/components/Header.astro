@@ -16,7 +16,12 @@ const navLinks = [
       <span class="logo-text">Élégance</span>
       <span class="logo-tagline">Maison de Chaussures</span>
     </a>
-    <ul class="nav-links">
+    <button class="menu-toggle" aria-label="Menú" id="menuToggle">
+      <span class="menu-bar"></span>
+      <span class="menu-bar"></span>
+      <span class="menu-bar"></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
       {navLinks.map(link => (
         <li><a href={link.href}>{link.label}</a></li>
       ))}
@@ -27,6 +32,7 @@ const navLinks = [
     </button>
     <div class="nav-accent"></div>
   </nav>
+  <div class="mobile-overlay" id="mobileOverlay"></div>
 </header>
 
 <Cart />
@@ -52,6 +58,28 @@ const navLinks = [
     }
     updateCartCount();
   }, 500);
+
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  const mobileOverlay = document.getElementById('mobileOverlay');
+
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      navLinks.classList.toggle('active');
+      if (mobileOverlay) mobileOverlay.classList.toggle('active');
+      document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+    });
+
+    if (mobileOverlay) {
+      mobileOverlay.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        navLinks.classList.remove('active');
+        mobileOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    }
+  }
 </script>
 
 <style>
@@ -178,17 +206,101 @@ const navLinks = [
     background: var(--color-dorado);
   }
 
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 100;
+  }
+
+  .menu-bar {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--color-negro);
+    transition: all 0.3s ease;
+  }
+
+  .menu-toggle.active .menu-bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .menu-toggle.active .menu-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle.active .menu-bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 90;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .mobile-overlay.active {
+    display: block;
+    opacity: 1;
+  }
+
   @media (max-width: 768px) {
     .header {
       padding: 1rem 1.5rem;
     }
 
+    .menu-toggle {
+      display: flex;
+    }
+
     .nav-links {
-      gap: 1.5rem;
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 280px;
+      height: 100vh;
+      background: var(--color-blanco-puro);
+      flex-direction: column;
+      gap: 0;
+      padding: 6rem 2rem 2rem;
+      transition: right 0.3s ease;
+      z-index: 95;
+      box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-links.active {
+      right: 0;
+    }
+
+    .nav-links li {
+      border-bottom: 1px solid var(--color-crema-oscuro);
+    }
+
+    .nav-links a {
+      display: block;
+      padding: 1.2rem 0;
+      font-size: 0.9rem;
     }
 
     .logo-text {
       font-size: 1.6rem;
+    }
+
+    .nav-accent {
+      display: none;
     }
   }
 </style>
